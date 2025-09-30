@@ -1,0 +1,122 @@
+{% extends 'base.html' %} {% block content %}
+<!-- Banner -->
+<div class="banner header-text" style="position: relative">
+  <div class="owl-banner owl-carousel">
+    <div
+      class="item banner-item"
+      style="background-image: url('/media/images/Banner_3.png')"
+    >
+      <div
+        class="text-content"
+        style="
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: #fff;
+          text-align: center;
+        "
+      >
+        <h4 style="font-size: 28px; font-weight: 600">Exclusive Deals Await</h4>
+        <h2 style="font-size: 52px; font-weight: 800">
+          Your One Stop Car Shop
+        </h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Banner Ends -->
+
+<!-- All Cars Section -->
+<div class="latest-products">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-heading">
+          <h2>All Cars</h2>
+        </div>
+      </div>
+
+      {% for car in cars %}
+      <div class="col-md-4 mb-4">
+        <div class="product-item">
+          <a href="{% url 'car_detail' car.slug %}"
+            ><img src="{{ car.image.url }}" alt="{{ car.car_name }}"
+          /></a>
+
+          <div class="down-content">
+            <!-- meta-row keeps name and price on same horizontal line and prevents overlap -->
+            <div class="meta-row">
+              <a class="car-link" href="{% url 'car_detail' car.slug %}"
+                ><h4 class="car-title">{{ car.car_name }}</h4></a
+              >
+              <div class="meta-price">
+                <span class="car-price">${{ car.price }}</span>
+              </div>
+            </div>
+
+            <p>{{ car.description|truncatewords:15 }}</p>
+            <form method="post" action="{% url 'add_to_wishlist' car.slug %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-outline-primary mt-2">
+                Add to Wishlist
+              </button>
+            </form>
+
+            <ul class="stars">
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-md-12">
+        <p class="text-center">No cars available at the moment.</p>
+      </div>
+      {% endfor %}
+
+      <!-- Pagination -->
+      <div class="col-md-12">
+        <nav aria-label="Car pagination">
+          <ul class="pagination justify-content-center">
+            {% if cars.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ cars.previous_page_number }}"
+                >Previous</a
+              >
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+              <span class="page-link">Previous</span>
+            </li>
+            {% endif %} {% for num in cars.paginator.page_range %}
+            {% if cars.number == num %}
+            <li class="page-item active">
+              <span class="page-link">{{ num }}</span>
+            </li>
+            {% else %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endif %} {% endfor %} {% if cars.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ cars.next_page_number }}"
+                >Next</a
+              >
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+              <span class="page-link">Next</span>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

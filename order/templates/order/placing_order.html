@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body_class %}payment-page{% endblock %} 
+
+{% block content %}
+<div class="container mt-5 mb-5 pt-5" style="margin-top: 200px">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg border-0 rounded">
+        <div class="card-header bg-primary text-white text-center">
+          <h4>Place Your Order</h4>
+        </div>
+        <div class="card-body p-4">
+          <!-- Customer Information -->
+          <h5 class="mb-3">Customer Information</h5>
+          <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label class="form-label">Full Name</label>
+              <input type="text" name="full_name" class="form-control" placeholder="John Doe" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" name="email" class="form-control" placeholder="you@example.com" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Phone Number</label>
+              <input type="text" name="phone" class="form-control" placeholder="+880 1XXX-XXXXXX" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Delivery Address</label>
+              <textarea name="address" class="form-control" rows="2" placeholder="Street, City, Postal Code, Country" required></textarea>
+            </div>
+
+            <!-- Order Summary -->
+            <h5 class="mt-4 mb-3">Order Summary</h5>
+            <ul class="list-group mb-3">
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Car Model</span>
+                <strong>{{ car.car_name }}</strong>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Price</span>
+                <strong>${{ car.price }}</strong>
+              </li>
+            </ul>
+
+            <!-- Payment Info -->
+            <h5 class="mt-4 mb-3">Payment Information</h5>
+            <div class="mb-3">
+              <label class="form-label">Cardholder Name</label>
+              <input type="text" name="card_name" class="form-control" placeholder="As on card" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Card Number</label>
+              <input type="text" name="card_number" class="form-control" placeholder="xxxx xxxx xxxx xxxx" required />
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Expiry Date</label>
+                <input type="text" name="expiry" class="form-control" placeholder="MM/YY" required />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">CVV</label>
+                <input type="password" name="cvv" class="form-control" placeholder="123" required />
+              </div>
+            </div>
+
+            <!-- Card Logos -->
+            <div class="mb-3">
+              <span>We accept:</span>
+              <img src="{% static 'assets/images/visacard.png' %}" alt="Visa" width="50" class="ms-2" />
+              <img src="{% static 'assets/images/mastercard.png' %}" alt="MasterCard" width="50" class="ms-2" />
+            </div>
+
+            <!-- Buttons -->
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-success px-5">Place Order</button>
+              <a href="{% url 'home' %}" class="btn btn-secondary px-4 ms-2">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

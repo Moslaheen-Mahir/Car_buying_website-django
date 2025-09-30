@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 pt-5" style="margin-top: 200px">
+    <h2 class="mb-4 text-center">My Wishlist</h2>
+
+    {% if wishlist %}
+        {% for car in wishlist %}
+        <div class="card mb-3 shadow-sm p-3" style="border-radius: 10px;">
+            <div class="row align-items-center">
+                <!-- Car Image -->
+                <div class="col-md-3 text-center">
+                    <img src="{{ car.image.url }}" class="img-fluid rounded" style="max-height: 150px; object-fit: cover;" alt="{{ car.car_name }}">
+                </div>
+
+                <!-- Car Info -->
+                <div class="col-md-6">
+                    <h5>{{ car.car_name }}</h5>
+                    <p class="text-muted">{{ car.description|truncatewords:25 }}</p>
+                </div>
+
+                <!-- Price & Actions -->
+                <div class="col-md-3 text-center">
+                    <h5 class="text-success mb-3">${{ car.price }}</h5>
+                    <form method="post" action="{% url 'remove_from_wishlist' car.slug %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                    </form>
+                    <form method="post" action="{% url 'placing_order' car.slug %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-sm">Place Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-center text-muted">Your wishlist is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}

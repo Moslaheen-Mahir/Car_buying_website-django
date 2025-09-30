@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="dashboard-container" style="padding: 20px;">
+    <h2>Welcome to Your Dashboard</h2>
+    <p>Here is a summary of your recent orders:</p>
+
+    <div class="orders-table" style="margin-top: 20px; overflow-x:auto;">
+        <table style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background-color:#f2f2f2;">
+                    <th style="padding: 10px; text-align:left; border-bottom: 1px solid #ddd;">Order ID</th>
+                    <th style="padding: 10px; text-align:left; border-bottom: 1px solid #ddd;">Car Model</th>
+                    <th style="padding: 10px; text-align:left; border-bottom: 1px solid #ddd;">Quantity</th>
+                    <th style="padding: 10px; text-align:left; border-bottom: 1px solid #ddd;">Price</th>
+                    <th style="padding: 10px; text-align:left; border-bottom: 1px solid #ddd;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">2001</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Tesla Model 3</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">1</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">$45,000</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;"><span style="color: green;">Delivered</span></td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">2002</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Ford Mustang</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">1</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">$35,500</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;"><span style="color: orange;">Pending</span></td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">2003</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">BMW X5</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">1</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">$60,000</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;"><span style="color: red;">Cancelled</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="dashboard-container mt-5 pt-5" style="padding: 20px; margin-top: 200px">
+    <h2>Welcome to Your Dashboard</h2>
+    <p>Here is a summary of your recent orders:</p>
+
+    {% if orders %}
+        <div class="orders-table" style="margin-top: 20px; overflow-x:auto;">
+            <table style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background-color:#f2f2f2;">
+                        <th style="padding: 10px; text-align:left; border-bottom: 1px solid #ddd;">Order ID</th>
+                        <th style="padding: 10px; text-align:left; border-bottom: 1px solid #ddd;">Car Model</th>
+                        <th style="padding: 10px; text-align:left; border-bottom: 1px solid #ddd;">Price</th>
+                        {% comment %} <th style="padding: 10px; text-align:left; border-bottom: 1px solid #ddd;">Status</th> {% endcomment %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td style="padding: 10px; border-bottom: 1px solid #ddd;">{{ order.id }}</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #ddd;">{{ order.car.car_name }}</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #ddd;">${{ order.car.price }}</td>
+                        {% comment %} <td style="padding: 10px; border-bottom: 1px solid #ddd;">
+                            {% if order.status == 'Delivered' %}
+                                <span style="color: green;">Delivered</span>
+                            {% elif order.status == 'Pending' %}
+                                <span style="color: orange;">Pending</span>
+                            {% elif order.status == 'Cancelled' %}
+                                <span style="color: red;">Cancelled</span>
+                            {% else %}
+                                <span>{{ order.status }}</span>
+                            {% endif %}
+                        </td> {% endcomment %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p style="margin-top: 20px; font-style: italic; color: gray;">
+            You have no orders yet. <a href="{% url 'our_cars' %}">Browse Cars</a> and place your first order!
+        </p>
+    {% endif %}
+</div>
+{% endblock %}

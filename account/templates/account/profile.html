@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block body_class %}profile-page{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <div class="card shadow-lg rounded border-0">
+        <!-- Header with title and dashboard button -->
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h4 class="mb-0">My Profile</h4>
+          <a href="{% url 'user_dashboard' %}" class="btn btn-light btn-sm">
+            <i class="bi bi-house-door-fill"></i> Dashboard
+          </a>
+        </div>
+
+        <div class="card-body p-5">
+          
+          <!-- Non-field errors -->
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+              {% for error in form.non_field_errors %}
+                <p class="mb-0">{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <!-- Profile Update Form -->
+          <form method="POST">
+            {% csrf_token %}
+
+            <!-- Username (disabled) -->
+            <div class="mb-4">
+              <label for="id_username" class="form-label">Username</label>
+              <input type="text" class="form-control" value="{{ request.user.username }}" disabled>
+            </div>
+
+            <!-- Email (disabled) -->
+            <div class="mb-4">
+              <label for="id_email" class="form-label">Email</label>
+              <input type="email" class="form-control" value="{{ request.user.email }}" disabled>
+            </div>
+
+            <!-- First Name -->
+            <div class="mb-4">
+              <label for="id_first_name" class="form-label">First Name</label>
+              {{ form.first_name|add_class:"form-control" }}
+              {% if form.first_name.errors %}
+                <div class="text-danger mt-1">
+                  {% for error in form.first_name.errors %}
+                    <p class="mb-0">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Last Name -->
+            <div class="mb-4">
+              <label for="id_last_name" class="form-label">Last Name</label>
+              {{ form.last_name|add_class:"form-control" }}
+              {% if form.last_name.errors %}
+                <div class="text-danger mt-1">
+                  {% for error in form.last_name.errors %}
+                    <p class="mb-0">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Update button -->
+            <div class="d-grid mb-4">
+              <button type="submit" class="btn btn-success btn-lg">Update Profile</button>
+            </div>
+          </form>
+
+          <!-- Other Actions -->
+          <div class="d-grid mb-3">
+            <a href="{% url 'change_password' %}" class="btn btn-warning btn-lg">
+              <i class="bi bi-key-fill"></i> Change Password
+            </a>
+          </div>
+
+          <div class="d-grid">
+            <a href="{% url 'logout' %}" class="btn btn-danger btn-lg">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <!-- Banner -->
+  <div class="banner header-text" style="position: relative;">
+    <div class="owl-banner owl-carousel">
+      <div class="item banner-item" style="background-image: url('media/images/Banner_1.png');">
+        <div class="text-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; text-align: center;">
+          <h4 style="font-size: 28px; font-weight: 600;">Drive Your Dream</h4>
+          <h2 style="font-size: 52px; font-weight: 800;">Trusted Cars, Trusted Deals</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Banner Ends -->
+
+  <!-- Latest Cars -->
+  <div class="latest-products">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-heading">
+            <h2>Latest Cars</h2>
+            <a href="{% url 'our_cars' %}">view all cars <i class="fa fa-angle-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Example Car -->
+        {% for car in latest_cars %}
+      <div class="col-md-4">
+        <div class="product-item">
+          <a href="{% url 'car_detail' car.slug %}"><img src="{{ car.image.url }}" alt="{{ car.car_name }}"></a>
+          <div class="down-content">
+            <a href="{% url 'car_detail' car.slug %}"><h4>{{ car.car_name }}</h4></a>
+            <h6>${{ car.price }}</h6>
+            <p>{{ car.description|truncatewords:15 }}</p>
+            <form method="post" action="{% url 'add_to_wishlist' car.slug %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-sm btn-outline-primary mt-2">Add to Wishlist</button>
+  </form>
+            <ul class="stars">
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+            </ul>
+            <span>Reviews (18)</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+        <!-- Copy above block for more cars -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Best Features -->
+  <div class="best-features">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-heading">
+            <h2>Why Choose IgnitionZone
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="left-content">
+            <h4>Trusted Cars, Best Prices</h4>
+            <p>We connect you with verified sellers to ensure you get the car you love at the right price.</p>
+            <ul class="featured-list">
+              <li><a href="#">Wide range of cars</a></li>
+              <li><a href="#">Affordable financing options</a></li>
+              <li><a href="#">Trusted by thousands of customers</a></li>
+              <li><a href="#">Easy buying process</a></li>
+              <li><a href="#">Verified car listings</a></li>
+            </ul>
+            <a href="{% url 'about' %}" class="filled-button">Read More</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="right-image">
+            <img src="media/images/About_Image.png" alt="Features">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="call-to-action">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="inner-content">
+            <div class="row">
+              <div class="col-md-8">
+                <h4>Find Your Next Car with <em>Ignition Zone</em></h4>
+                <p>Search, compare, and buy with confidence. Start your journey today.</p>
+              </div>
+              <div class="col-md-4">
+                <a href="{% url 'our_cars' %}" class="filled-button">Browse Cars</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
