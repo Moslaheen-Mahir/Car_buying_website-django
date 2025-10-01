@@ -34,10 +34,19 @@
             <a href="{% url 'car_detail' car.slug %}"><h4>{{ car.car_name }}</h4></a>
             <h6>${{ car.price }}</h6>
             <p>{{ car.description|truncatewords:15 }}</p>
-            <form method="post" action="{% url 'add_to_wishlist' car.slug %}">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-sm btn-outline-primary mt-2">Add to Wishlist</button>
-  </form>
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'add_to_wishlist' car.slug %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-primary mt-2">
+                        Add to Wishlist
+                    </button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}?next={% url 'add_to_wishlist' car.slug %}" 
+                   class="btn btn-sm btn-outline-primary mt-2">
+                    Add to Wishlist
+                </a>
+            {% endif %}>
             <ul class="stars">
               <li><i class="fa fa-star"></i></li>
               <li><i class="fa fa-star"></i></li>
